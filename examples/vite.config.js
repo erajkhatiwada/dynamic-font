@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
+  base: '/dynamic-font/',
   resolve: {
     alias: {
       // Point directly to source so changes are reflected without rebuilding
