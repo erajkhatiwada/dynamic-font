@@ -91,6 +91,7 @@ const useT = () => useContext(ThemeCtx);
 function Nav({ dark, onToggle }) {
   const t = useT();
   const mobile = useMobile();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <nav
@@ -99,54 +100,111 @@ function Nav({ dark, onToggle }) {
         background: t.navBg,
         backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
         borderBottom: `1px solid ${t.navBorder}`,
-        padding: mobile ? '0 20px' : '0 48px', height: 60,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}
     >
-      <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: '-0.3px', color: t.navText }}>
-        dynamic-font
-      </span>
-      <div style={{ display: 'flex', alignItems: 'center', gap: mobile ? 10 : 24 }}>
-        {/* Hide nav links on mobile — too cramped */}
-        {!mobile && <NavLink href="#showcase">How it works</NavLink>}
-        {!mobile && <NavLink href="#demo">Demo</NavLink>}
-        {!mobile && <NavLink href="#quickstart">Docs</NavLink>}
-        <button
-          onClick={onToggle}
-          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-          style={{
-            background: 'none', border: `1px solid ${t.navToggleBdr}`,
-            borderRadius: 6, padding: '5px 12px', fontSize: 14,
-            color: t.navToggleColor, cursor: 'pointer', transition: 'all 0.15s', lineHeight: 1,
-          }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = t.actHvBdr; e.currentTarget.style.color = t.text; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = t.navToggleBdr; e.currentTarget.style.color = t.navToggleColor; }}
-        >
-          {dark ? '○ Light' : '● Dark'}
-        </button>
-        <a
-          href={NPM_URL} target="_blank" rel="noopener noreferrer"
-          style={{
-            fontSize: 15, fontWeight: 600, color: t.navGHcolor, background: '#cc3534',
-            textDecoration: 'none', padding: '7px 16px', borderRadius: 6, transition: 'opacity 0.15s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
-          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-        >
-          npm
-        </a>
-        <a
-          href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
-          style={{
-            fontSize: 15, fontWeight: 600, color: t.navGHcolor, background: t.navGHbg,
-            textDecoration: 'none', padding: '7px 16px', borderRadius: 6, transition: 'opacity 0.15s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
-          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-        >
-          GitHub
-        </a>
+      {/* Main bar */}
+      <div style={{
+        padding: mobile ? '0 20px' : '0 48px', height: 60,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: '-0.3px', color: t.navText }}>
+          dynamic-font
+        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: mobile ? 10 : 24 }}>
+          {!mobile && <NavLink href="#showcase">How it works</NavLink>}
+          {!mobile && <NavLink href="#demo">Demo</NavLink>}
+          {!mobile && <NavLink href="#quickstart">Docs</NavLink>}
+          <button
+            onClick={onToggle}
+            title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{
+              background: 'none', border: `1px solid ${t.navToggleBdr}`,
+              borderRadius: 6, padding: '5px 12px', fontSize: 14,
+              color: t.navToggleColor, cursor: 'pointer', transition: 'all 0.15s', lineHeight: 1,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = t.actHvBdr; e.currentTarget.style.color = t.text; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = t.navToggleBdr; e.currentTarget.style.color = t.navToggleColor; }}
+          >
+            {dark ? '○ Light' : '● Dark'}
+          </button>
+          {!mobile && (
+            <>
+              <a
+                href={NPM_URL} target="_blank" rel="noopener noreferrer"
+                style={{
+                  fontSize: 15, fontWeight: 600, color: '#fff', background: '#cc3534',
+                  textDecoration: 'none', padding: '7px 16px', borderRadius: 6, transition: 'opacity 0.15s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                npm
+              </a>
+              <a
+                href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
+                style={{
+                  fontSize: 15, fontWeight: 600, color: t.navGHcolor, background: t.navGHbg,
+                  textDecoration: 'none', padding: '7px 16px', borderRadius: 6, transition: 'opacity 0.15s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                GitHub
+              </a>
+            </>
+          )}
+          {/* Hamburger — mobile only */}
+          {mobile && (
+            <button
+              onClick={() => setMenuOpen(o => !o)}
+              style={{
+                background: 'none', border: `1px solid ${t.navToggleBdr}`,
+                borderRadius: 6, padding: '5px 10px', cursor: 'pointer',
+                color: t.navMuted, lineHeight: 1, fontSize: 18, transition: 'all 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = t.actHvBdr; e.currentTarget.style.color = t.text; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = t.navToggleBdr; e.currentTarget.style.color = t.navMuted; }}
+              aria-label="Menu"
+            >
+              {menuOpen ? '✕' : '☰'}
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {mobile && menuOpen && (
+        <div style={{
+          background: t.navBg, borderTop: `1px solid ${t.navBorder}`,
+          padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 14,
+        }}
+          onClick={() => setMenuOpen(false)}
+        >
+          <NavLink href="#showcase">How it works</NavLink>
+          <NavLink href="#demo">Demo</NavLink>
+          <NavLink href="#quickstart">Docs</NavLink>
+          <div style={{ display: 'flex', gap: 10, paddingTop: 4 }}>
+            <a
+              href={NPM_URL} target="_blank" rel="noopener noreferrer"
+              style={{
+                fontSize: 14, fontWeight: 600, color: '#fff', background: '#cc3534',
+                textDecoration: 'none', padding: '7px 16px', borderRadius: 6,
+              }}
+            >
+              npm
+            </a>
+            <a
+              href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
+              style={{
+                fontSize: 14, fontWeight: 600, color: t.navGHcolor, background: t.navGHbg,
+                textDecoration: 'none', padding: '7px 16px', borderRadius: 6,
+              }}
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -219,20 +277,25 @@ function Hero() {
     >
       <div style={{ padding: mobile ? '36px 20px 48px' : '56px 56px 72px', maxWidth: 1120, margin: '0 auto', width: '100%' }}>
 
-        {/* Identity + badges */}
+        {/* Hero headline + description */}
+        <h1 style={{
+          fontSize: mobile ? 36 : 62, fontWeight: 800, letterSpacing: '-1.5px', lineHeight: 1.1,
+          color: t.text, margin: '0 0 18px',
+        }}>
+          Build your own<br />handwriting library.
+        </h1>
+        <p style={{
+          fontSize: mobile ? 17 : 20, lineHeight: 1.65, color: t.muted,
+          maxWidth: 640, margin: '0 0 28px', fontWeight: 400,
+        }}>
+          Pick the handwritten font families you love and assign them to individual letters.
+          The same letter — like <em style={{ color: t.text, fontStyle: 'normal', fontWeight: 600 }}>r</em> — gets
+          a different font every time it appears, creating a naturally varied script that mimics real handwriting
+          without any AI or backend processing.
+        </p>
+
+        {/* Badges */}
         <div style={{ marginBottom: mobile ? 28 : 48 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-            <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.3px', color: t.text }}>
-              dynamic-font
-            </span>
-            <span style={{
-              fontSize: 13, fontFamily: "'SF Mono','Cascadia Code',monospace",
-              background: t.verBg, color: t.verColor, border: `1px solid ${t.verBdr}`,
-              padding: '3px 9px', borderRadius: 4,
-            }}>
-              v0.1.0
-            </span>
-          </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <Badge bg={t.greenBg} color={t.greenColor} border={t.greenBdr}>No AI backend needed</Badge>
             <Badge bg={t.amberBg} color={t.amberColor} border={t.amberBdr}>Instant rendering</Badge>
@@ -747,7 +810,9 @@ function Demo() {
 
 // ─── Quick Start ──────────────────────────────────────────────────────────────
 
-const REACT_SNIPPET = `import { DynamicFontInput } from 'dynamic-font/react';
+const REACT_SNIPPET = `import {
+  DynamicFontInput,
+} from 'dynamic-font/react';
 
 function App() {
   return (
@@ -780,7 +845,7 @@ function CodeBlock({ label, code }) {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <div style={{ flex: 1, minWidth: 0 }}>
+    <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
         <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: t.muted }}>
           {label}
@@ -793,8 +858,9 @@ function CodeBlock({ label, code }) {
         </button>
       </div>
       <pre style={{
+        flex: 1,
         background: '#0d0d0d', color: '#c8c0b8',
-        padding: '20px 24px', borderRadius: 12, fontSize: 15, lineHeight: 1.8,
+        padding: '20px 24px', borderRadius: 12, fontSize: 14, lineHeight: 1.8,
         overflowX: 'auto', fontFamily: "'SF Mono','Cascadia Code','Fira Code',monospace",
         margin: 0, border: '1px solid #1e1e1e',
       }}>
@@ -823,7 +889,7 @@ function QuickStart() {
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" style={{ color: t.text }}>GitHub</a>.
         </p>
         {/* Stack vertically on mobile */}
-        <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', gap: 24 }}>
+        <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', gap: 24, alignItems: 'stretch' }}>
           <CodeBlock label="React" code={REACT_SNIPPET} />
           <CodeBlock label="Vanilla JS" code={VANILLA_SNIPPET} />
         </div>
@@ -847,7 +913,7 @@ function Footer() {
       gap: mobile ? 8 : 0,
       fontSize: 15, borderTop: `1px solid ${t.border}`,
     }}>
-      <span>dynamic-font v0.1.3 · MIT License</span>
+      <span>dynamic-font · MIT License</span>
       <div style={{ display: 'flex', gap: 20 }}>
         <a
           href={NPM_URL} target="_blank" rel="noopener noreferrer"
