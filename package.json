@@ -1,6 +1,6 @@
 {
   "name": "dynamic-font",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Per-character random handwritten font assignment for a realistic handwriting effect",
   "license": "MIT",
   "main": "dist/index.cjs.js",
@@ -19,6 +19,12 @@
       "require": "./dist/react.cjs.js"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erajkhatiwada/dynamic-font.git"
+  },
+  "homepage": "https://github.com/erajkhatiwada/dynamic-font",
+  "bugs": "https://github.com/erajkhatiwada/dynamic-font/issues",
   "engines": { "node": ">=18" },
   "files": ["dist", "src"],
   "sideEffects": false,
