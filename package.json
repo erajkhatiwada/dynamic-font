@@ -1,7 +1,8 @@
 {
   "name": "dynamic-font",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Per-character random handwritten font assignment for a realistic handwriting effect",
+  "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "exports": {
