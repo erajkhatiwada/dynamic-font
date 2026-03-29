@@ -3,6 +3,7 @@ import { DynamicFontInput, DynamicFontText, HANDWRITTEN_FONTS, DEFAULT_FONTS } f
 import { loadFonts } from 'dynamic-font/core';
 
 const GITHUB_URL = 'https://github.com/erajkhatiwada/dynamic-font';
+const NPM_URL = 'https://www.npmjs.com/package/dynamic-font';
 const NPM_INSTALL = 'npm install dynamic-font';
 const HERO_DEFAULT = 'Every letter tells its own story.';
 const SHOWCASE_CHARS = ['a', 'e', 'g', 'h', 'i', 'j', 'k', 'n', 'r', 's', 't', 'y'];
@@ -123,6 +124,17 @@ function Nav({ dark, onToggle }) {
         >
           {dark ? '○ Light' : '● Dark'}
         </button>
+        <a
+          href={NPM_URL} target="_blank" rel="noopener noreferrer"
+          style={{
+            fontSize: 15, fontWeight: 600, color: t.navGHcolor, background: '#cc3534',
+            textDecoration: 'none', padding: '7px 16px', borderRadius: 6, transition: 'opacity 0.15s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          npm
+        </a>
         <a
           href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
           style={{
@@ -316,6 +328,18 @@ function Hero() {
               {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
+          <a
+            href={NPM_URL} target="_blank" rel="noopener noreferrer"
+            style={{
+              fontSize: 15, color: t.actColor, textDecoration: 'none',
+              padding: '8px 16px', border: `1px solid ${t.actBdr}`,
+              borderRadius: 8, transition: 'all 0.15s', whiteSpace: 'nowrap',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = t.actHvBdr; e.currentTarget.style.color = t.actHvColor; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = t.actBdr; e.currentTarget.style.color = t.actColor; }}
+          >
+            npm →
+          </a>
           <a
             href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
             style={{
@@ -823,15 +847,25 @@ function Footer() {
       gap: mobile ? 8 : 0,
       fontSize: 15, borderTop: `1px solid ${t.border}`,
     }}>
-      <span>dynamic-font v0.1.0 · MIT License</span>
-      <a
-        href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
-        style={{ color: t.footColor, textDecoration: 'none', transition: 'color 0.15s' }}
-        onMouseEnter={e => (e.currentTarget.style.color = t.text)}
-        onMouseLeave={e => (e.currentTarget.style.color = t.footColor)}
-      >
-        GitHub →
-      </a>
+      <span>dynamic-font v0.1.3 · MIT License</span>
+      <div style={{ display: 'flex', gap: 20 }}>
+        <a
+          href={NPM_URL} target="_blank" rel="noopener noreferrer"
+          style={{ color: t.footColor, textDecoration: 'none', transition: 'color 0.15s' }}
+          onMouseEnter={e => (e.currentTarget.style.color = t.text)}
+          onMouseLeave={e => (e.currentTarget.style.color = t.footColor)}
+        >
+          npm →
+        </a>
+        <a
+          href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
+          style={{ color: t.footColor, textDecoration: 'none', transition: 'color 0.15s' }}
+          onMouseEnter={e => (e.currentTarget.style.color = t.text)}
+          onMouseLeave={e => (e.currentTarget.style.color = t.footColor)}
+        >
+          GitHub →
+        </a>
+      </div>
     </footer>
   );
 }
