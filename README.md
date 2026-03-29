@@ -2,6 +2,8 @@
 
 Assigns a random handwritten font to each character as the user types, creating a realistic mixed-handwriting effect. Works with React components, any vanilla-JS framework, and can be integrated into third-party editors (craft.js, Slate.js, TipTap, Lexical, etc.) via the core engine.
 
+**[Live demo → erajkhatiwada.github.io/dynamic-font](https://erajkhatiwada.github.io/dynamic-font/)**
+
 ```
 H  e  l  l  o  !
 ↑  ↑  ↑  ↑  ↑  ↑
